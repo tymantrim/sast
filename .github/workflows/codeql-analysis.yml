@@ -1,19 +1,27 @@
-name: CodeQL Analysis
+name: "CodeQL Analysis"
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main  # Trigger on push to main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull request to main branch
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup CodeQL
-      uses: github/codeql-action/setup-codeql@v2
+      - name: Set up CodeQL
+        uses: github/codeql-action/setup@v2
+        with:
+          languages: python  # Change to your app's language (e.g., python, javascript, etc.)
 
-    - name: Analyze code
-      uses: github/codeql-action/analyze@v2
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          output: codeql-results.sarif  # Output file format for the results
